@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'authentication.apps.AuthenticationConfig',
     'corsheaders',
+    'comments.apps.CommentsConfig',
+    'videos.apps.VideoConfig',
+    'orders.apps.OrdersConfig',
 ]
 
 MIDDLEWARE = [
