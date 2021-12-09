@@ -1,7 +1,18 @@
 from django.urls import path
-from . import views
+from rest_framework import routers
 
-urlpatterns = [
-    path('all/', views.get_comments),
-    path('', views.post_comments)
+from .views import (
+    get_comments,
+    post_comments,
+    CommentViewSet
+)
+
+router = routers.DefaultRouter()
+router.register('all', CommentViewSet)
+
+urlpatterns = router.urls
+
+urlpatterns += [
+    # path('all/', get_comments),
+    # path('', post_comments)
 ]

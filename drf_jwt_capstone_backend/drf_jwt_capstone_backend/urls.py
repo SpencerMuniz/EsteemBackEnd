@@ -22,5 +22,4 @@ urlpatterns = [
     path('api/comments/', include('comments.urls')),
     path('api/videos/', include('videos.urls')),
     path('api/orders/', include('orders.urls')),
-    
 ]
