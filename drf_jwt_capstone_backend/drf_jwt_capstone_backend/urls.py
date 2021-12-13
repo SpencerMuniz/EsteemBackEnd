@@ -22,4 +22,6 @@ urlpatterns = [
     path('api/comments/', include('comments.urls')),
     path('api/videos/', include('videos.urls')),
     path('api/orders/', include('orders.urls')),
+    path('chat/', include('chat.urls')),
+    # path('api/stripe/', include('payments.urls'))
 ]

@@ -21,6 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-$-*c5gei%cikbqw&1eqj$7_%c3npk^^7xp#_x(8oc$zy(j3wus'
+STRIPE_SECRET_KEY = 'sk_test_51K4ujtItkYHTAHY6d6rpStiwQv3F6Sk4FQnG1L0C7xmbBLd84AnzoiKlFZYI0VFCXHduaXCpra2EDkNZRnNw75M0008RyOxipo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,14 +38,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Local Apps
+    'chat',
+    'comments.apps.CommentsConfig',
+    'videos.apps.VideoConfig',
+    'orders.apps.OrdersConfig',
+
+    # Third Party Apps
+    'channels',
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'authentication.apps.AuthenticationConfig',
     'corsheaders',
-    'comments.apps.CommentsConfig',
-    'videos.apps.VideoConfig',
-    'orders.apps.OrdersConfig',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'csp.middleware.CSPMiddleware',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -124,11 +132,25 @@ USE_L10N = True
 
 USE_TZ = True
 
+ASGI_APPLICATION = "drf_jwt_capstone_backend.routing.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+   }
+}
+
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'",)
+CSP_IMG_SRC = ("'self'",)
+CSP_FONT_SRC = ("'self'",)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+SITE_URL = 'http://localhost:3000'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -165,7 +187,6 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(days=10),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=20),
 }
-
 
 
 AUTH_USER_MODEL = 'authentication.User'
